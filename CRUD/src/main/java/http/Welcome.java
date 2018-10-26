@@ -15,13 +15,27 @@ public class Welcome {
 	@POST
 	@Path("/add")
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response addStudent(Student std) {
 		StudentDao studentDao = new StudentDao();
-		if(studentDao.createStudent(std) == 0) {
-			return Response.status(200).entity("Successfully added user " + std.getName()).build();
+		if(studentDao.createStudent(std) == 1) {
+			return Response.status(200).entity("success").build();
 		}else {
-			return Response.status(201).entity("Successfully added user " + std.getName()).build();
+			return Response.status(500).entity("failure").build();
+		}
+	}
+	
+	@POST
+	@Path("/search")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response searchStudent(String rollNo) {
+		StudentDao studentDao = new StudentDao();
+		Student student = studentDao.getStudent(Integer.parseInt(rollNo));
+		if(student != null){
+			return Response.status(200).entity(student).build(); 
+		}else {
+			return Response.status(500).entity(null).build();
 		}
 	}
 }
