@@ -33,7 +33,7 @@ input[type=submit] {
         <input type="text" id="name" name="name" required>
          
         <label for="roll">Roll Number</label> 
-        <input type="number" id="psw" name="roll" required>
+        <input type="number" id="rollNumber" name="roll" required>
          
         <label for="physics">Physics</label> 
         <input type="number" id="physics" name="physics" required>
@@ -49,28 +49,38 @@ input[type=submit] {
         
         <input type="button" id="submit_button" value="Insert" onclick="submitForm()">
     </form>
+    <p id="success_p" style="display: none;">Student added successfully</p>
+    <p id="failure_p" style="display: none;">Error occurred while adding student</p>
+    <button onclick="location.href = 'search.jsp';" id="search_button" >Search</button>
 </div>
 </html>
 <script>
 	
 		function submitForm(){
-			    $.ajax({
+			$('#failure_p').hide();
+			$('#success_p').hide();
+			$.ajax({
 			    	 	type: 'POST', // GET
 			    	 	contentType:"application/json" ,
 						url:"http://localhost:10001/CRUD/rest/student/add",
 			        	dataType : "json", 
 			        	data : formToJSON(),
-			          	success: function(data)
-			           	{
-			            	alert(data); // show response from the php script.
-			           	}
+			    		error: function(data){
+			    			if(data.status == 200){
+			    				$('#failure_p').hide();
+				            	$('#success_p').show();
+			    			}else{
+				    			$('#success_p').hide();
+				    			$('#failure_p').show();
+			    			}
+			    		}
 			    });
 		}
 		
 		function formToJSON() 
 		{
 			var name = document.getElementById("name").value;
-			var rollno = document.getElementById("psw").value;
+			var rollno = document.getElementById("rollNumber").value;
 			var physicsmarks = document.getElementById("physics").value;
 			var chemistrymarks = document.getElementById("chemistry").value;
 			var mathmarks = document.getElementById("maths").value;
