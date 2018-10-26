@@ -20,7 +20,6 @@ public class Student {
 	
 	@Id
 	@XmlElement
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "rollno")
 	private int rollNumber;
 	
