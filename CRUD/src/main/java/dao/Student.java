@@ -10,28 +10,37 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
+@XmlRootElement(name = "Student")
 @Table(name = "STUDENT")
 public class Student {
 	
 	@Id
+	@XmlElement
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "rollno")
 	private int rollNumber;
 	
+	@XmlElement
 	@Column(name = "name")
 	private String name;	
 	
+	@XmlElement
 	@Column(name = "physicsmarks")
 	private int physicsMarks;
 	
+	@XmlElement
 	@Column(name = "chemistrymarks")
 	private int chemistryMarks;
 	
+	@XmlElement
 	@Column(name = "mathmarks")
 	private int mathMarks;
 	
+	@XmlElement
 	@Column(name = "dob")
 	@Temporal(TemporalType.DATE)
 	private Date dob;

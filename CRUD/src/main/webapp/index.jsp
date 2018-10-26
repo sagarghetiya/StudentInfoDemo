@@ -47,40 +47,41 @@ input[type=submit] {
         <label for="dob">Date Of Birth</label>
         <input type="date" id="dob" name="dob" required> 
         
-        <input type="button" id="submit_button" value="Submit" onclick="submitForm()">
+        <input type="button" id="submit_button" value="Insert" onclick="submitForm()">
     </form>
 </div>
 </html>
 <script>
 	
 		function submitForm(){
-			document.getElementById("myForm").submit(function(e) {
-			    var form = $(this);
-			    alert(form);
-			    var url = form.attr('action');
-				alert(url);
 			    $.ajax({
 			    	 	type: 'POST', // GET
-						contentType: 'application/json',
+			    	 	contentType:"application/json" ,
+						url:"http://localhost:10001/CRUD/rest/student/add",
+			        	dataType : "json", 
 			        	data : formToJSON(),
 			          	success: function(data)
 			           	{
 			            	alert(data); // show response from the php script.
 			           	}
 			    });
-			    e.preventDefault(); // avoid to execute the actual submit of the form.
-			});
 		}
 		
 		function formToJSON() 
 		{
+			var name = document.getElementById("name").value;
+			var rollno = document.getElementById("psw").value;
+			var physicsmarks = document.getElementById("physics").value;
+			var chemistrymarks = document.getElementById("chemistry").value;
+			var mathmarks = document.getElementById("maths").value;
+			var dob = document.getElementById("dob").value;
 			var eqn = JSON.stringify({
-				name: document.GetElementById("name").value,
-		        roll: document.GetElementById("psw").value,
-		        physics: document.GetElementById("physics").value,
-		        chemistry: document.GetElementById("chemistry").value,
-		        maths: document.GetElementById("maths").value,
-		        dob: document.GetElementById("dob").value,// serializes the form's elements.
+				"name": name,
+				"rollNumber": rollno,
+				"physicsMarks": physicsmarks,
+				"chemistryMarks": chemistrymarks,
+				"mathMarks": mathmarks,
+		        "dob": dob// serializes the form's elements.
 	        });
 			return eqn;
 		}
