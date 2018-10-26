@@ -29,9 +29,12 @@ public class StudentDao {
 	public Student getStudent(int rollNumber) {
 		Session sessionFactory = HibernateUtil.getSessionFactory().openSession();
 		Criteria criteria = sessionFactory.createCriteria(Student.class);
-		criteria.add(Restrictions.eq("rollno", rollNumber));
+		criteria.add(Restrictions.eq("rollNumber", rollNumber));
 		@SuppressWarnings("unchecked")
 		List<Student> studentList = criteria.list();
-		return studentList.get(0);
+		if(!studentList.isEmpty())
+			return studentList.get(0);
+		else
+			return  null;
 	}
 }
