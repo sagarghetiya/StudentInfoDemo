@@ -27,17 +27,6 @@ input[type=submit] {
 }
 
 </style>
-<script type="text/javascript">
- function showHide() {
-   var div = document.getElementById("division");
-   if (div.style.display == 'none') {
-     div.style.display = '';
-   }
-   else {
-     div.style.display = 'none';
-   }
- }
-</script>
 
 </head>
 <div class="container">
@@ -46,12 +35,12 @@ input[type=submit] {
 		<label for="roll">Roll Number</label> 
 		<input type="text" id="rollNum" name="roll" required> 
 		
-		<input type="submit" value="Search" onclick="search()">
+		<input type="button" value="Search" onclick="search()">
 		<button onclick="location.href = 'index.jsp';" id="insert_button" >Insert</button>
 	</form>
 </div>
 
-<div id="division" class="container" style="display:none">
+<div id="division" class="container">
 		<label for="name">Student Name</label> 
 		<input type="text" id="name" name="name" readonly>
 		 
@@ -77,16 +66,27 @@ input[type=submit] {
 		    url: "http://localhost:10001/CRUD/rest/student/search",
 		    data :rollNum,
 		    dataType : "json", 
-		    success: function(res){
-		    	debugger;
-		    	res.responseJSON;
-		    	showHide();
+		    timeout: 7000,
+		    success: function(data){
+		    	populateValues(data);
+		    	//res.responseJSON;
+		    	//showHide();
 		    },
-		    error: function(res) {
-		    	debugger;
-		   		res.responseJSON;
-		        showHide();
+		    error: function(data) {
+		    	//res.name;
+		    	alert("Problem occurred while fetching data");
+		   		//res.responseJSON;
+		        //showHide();
 		    }
 		});
+	}
+	function populateValues(data){
+		document.getElementById("name").value = data.name;
+		document.getElementById("physics").value = data.physicsMarks;
+		document.getElementById("chemistry").value = data.chemistryMarks;
+		document.getElementById("maths").value = data.mathMarks;
+		var total = data.physicsMarks + data.chemistryMarks + data.mathMarks;
+		$("#total").val(total);
+		div.style.display = '';
 	}
 </script>

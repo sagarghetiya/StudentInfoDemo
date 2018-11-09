@@ -33,9 +33,9 @@ public class Welcome {
 		StudentDao studentDao = new StudentDao();
 		Student student = studentDao.getStudent(Integer.parseInt(rollNo));
 		if(student != null){
-			return Response.status(200).entity(student).build(); 
+			return Response.status(200).entity(student).build();
 		}else {
-			return Response.status(500).entity(null).build();
+			return Response.serverError().build();
 		}
 	}
 }
