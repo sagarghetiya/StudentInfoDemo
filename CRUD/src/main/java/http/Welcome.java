@@ -1,6 +1,11 @@
 package http;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -48,8 +53,32 @@ public class Welcome {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	public Response uploadImage(
 			@FormDataParam("pic")InputStream in,
-			@FormDataParam("pic_url")String path) {
-		System.out.println(path);
-		return null;
+			@FormDataParam("pic_url")String path) throws IOException {
+		OutputStream outputStream = null;
+		try {
+			outputStream = new FileOutputStream(new File(path));
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+			return Response.status(500).entity("failure").build();
+		}
+		int read = 0;
+		byte[] bytes = new byte[1024];
+
+		try {
+			while ((read = in.read(bytes)) != -1) {
+				try {
+					outputStream.write(bytes, 0, read);
+				} catch (IOException e) {
+					e.printStackTrace();
+					return Response.status(500).entity("failure").build();
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			return Response.status(500).entity("failure").build();
+		}finally {
+			outputStream.close();
+		}
+		return Response.status(200).entity("success").build();
 	}
 }
