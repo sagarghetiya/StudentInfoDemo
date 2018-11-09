@@ -47,6 +47,9 @@ input[type=submit] {
         <label for="dob">Date Of Birth</label>
         <input type="date" id="dob" name="dob" required> 
         
+        <label for="profile_pic">Pic</label>
+        <input type="image" id="profile_pic"> 
+        
         <input type="button" id="submit_button" value="Insert" onclick="submitForm()">
     </form>
     <p id="success_p" style="display: none;">Student added successfully</p>

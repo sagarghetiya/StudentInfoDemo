@@ -41,7 +41,11 @@ public class Student {
 	@Column(name = "dob")
 	@Temporal(TemporalType.DATE)
 	private Date dob;
-
+	
+	@XmlElement
+	@Column(name = "pic_url")
+	private String picUrl;
+	
 	public String getName() {
 		return name;
 	}
@@ -90,4 +94,11 @@ public class Student {
 		this.dob = dob;
 	}
 	
+	public String getPicUrl() {
+		return picUrl;
+	}
+	
+	public void setPicUrl(String picUrl) {
+		this.picUrl = picUrl;
+	}
 }

@@ -24,7 +24,7 @@ public class Welcome {
 			return Response.status(500).entity("failure").build();
 		}
 	}
-	
+
 	@POST
 	@Path("/search")
 	@Consumes(MediaType.APPLICATION_JSON)
