@@ -48,7 +48,7 @@ input[type=submit] {
         <input type="date" id="dob" name="dob" required> 
         
         <label for="profile_pic">Pic</label>
-        <input type="image" id="profile_pic"> 
+        <input type="file" id="profile_pic" name="profile_pic" />
         
         <input type="button" id="submit_button" value="Insert" onclick="submitForm()">
     </form>
@@ -62,6 +62,8 @@ input[type=submit] {
 		function submitForm(){
 			$('#failure_p').hide();
 			$('#success_p').hide();
+			
+			debugger;
 			$.ajax({
 			    	 	type: 'POST', // GET
 			    	 	contentType:"application/json" ,
@@ -70,6 +72,7 @@ input[type=submit] {
 			        	data : formToJSON(),
 			    		error: function(data){
 			    			if(data.status == 200){
+			    				uploadImage();
 			    				$('#failure_p').hide();
 				            	$('#success_p').show();
 			    			}else{
@@ -78,6 +81,30 @@ input[type=submit] {
 			    			}
 			    		}
 			    });
+			
+		}
+		function uploadImage(){
+			debugger;
+			var formData = new FormData();
+			var rollno = document.getElementById("rollNumber").value;
+			var pic_url = "/home/sagar/SERVER_DATA/"+rollno;
+			var file = $('input[name="profile_pic"').get(0).files[0];
+			formData.append("pic", file);
+			formData.append("pic_url",pic_url);
+			debugger;
+			$.ajax({
+				type:"POST",
+				processData: false,
+				contentType: false,
+				url:"http://localhost:10001/CRUD/rest/student/upload",
+				data: formData,
+				success:function(data){
+					alert("image uploaded successfully!!");
+				},
+				error:function(){
+					alert("problem occurred while uploading data");
+				}
+			});
 		}
 		
 		function formToJSON() 
@@ -88,13 +115,15 @@ input[type=submit] {
 			var chemistrymarks = document.getElementById("chemistry").value;
 			var mathmarks = document.getElementById("maths").value;
 			var dob = document.getElementById("dob").value;
+			var pic_url = "/home/sagar/SERVER_DATA/"+rollno;
 			var eqn = JSON.stringify({
 				"name": name,
 				"rollNumber": rollno,
 				"physicsMarks": physicsmarks,
 				"chemistryMarks": chemistrymarks,
 				"mathMarks": mathmarks,
-		        "dob": dob// serializes the form's elements.
+		        "dob": dob,// serializes the form's elements.
+		        "picUrl":pic_url
 	        });
 			return eqn;
 		}
