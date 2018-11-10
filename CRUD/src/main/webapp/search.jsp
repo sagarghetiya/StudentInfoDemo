@@ -36,7 +36,8 @@ input[type=submit] {
 		<input type="text" id="rollNum" name="roll" required> 
 		
 		<input type="button" value="Search" onclick="search()">
-		<button onclick="location.href = 'index.jsp';" id="insert_button" >Insert</button>
+		<button onclick="location.href = 'index.jsp';" id="insert_button" >Insert Page</button>
+		<button onclick="location.href = 'update.jsp';" id="update_button" >Update Page</button>
 	</form>
 </div>
 
@@ -54,7 +55,10 @@ input[type=submit] {
 		<input type="number" id="maths" name="maths" readonly>
 		 
 		<label for="total">Total</label>
-		<input type="number" id="total" name="total" readonly> 
+		<input type="number" id="total" name="total" readonly>
+		
+		<label for="profile_pic">Pic</label>
+		<input type="image" id="profile_pic" readonly/> 
 </div>
 </html>
 <script>
@@ -69,14 +73,9 @@ input[type=submit] {
 		    timeout: 7000,
 		    success: function(data){
 		    	populateValues(data);
-		    	//res.responseJSON;
-		    	//showHide();
 		    },
 		    error: function(data) {
-		    	//res.name;
 		    	alert("Problem occurred while fetching data");
-		   		//res.responseJSON;
-		        //showHide();
 		    }
 		});
 	}
@@ -85,8 +84,8 @@ input[type=submit] {
 		document.getElementById("physics").value = data.physicsMarks;
 		document.getElementById("chemistry").value = data.chemistryMarks;
 		document.getElementById("maths").value = data.mathMarks;
-		var total = data.physicsMarks + data.chemistryMarks + data.mathMarks;
+		document.getElementById('profile_pic').src = "img/"+document.getElementById("rollNum").value+".png";
+		total = data.physicsMarks + data.chemistryMarks + data.mathMarks;
 		$("#total").val(total);
-		div.style.display = '';
 	}
 </script>

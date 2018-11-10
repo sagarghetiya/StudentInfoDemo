@@ -37,4 +37,19 @@ public class StudentDao {
 		else
 			return  null;
 	}
+	public int updateStudent(Student student) {
+        Session sessionFactory = HibernateUtil.getSessionFactory().openSession();
+        try {
+            Transaction transaction = sessionFactory.beginTransaction();
+            sessionFactory.saveOrUpdate(student);
+            transaction.commit();
+        }catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+        finally {
+            sessionFactory.close();
+        }
+        return 1;
+    }
 }

@@ -54,7 +54,8 @@ input[type=submit] {
     </form>
     <p id="success_p" style="display: none;">Student added successfully</p>
     <p id="failure_p" style="display: none;">Error occurred while adding student</p>
-    <button onclick="location.href = 'search.jsp';" id="search_button" >Search</button>
+    <button onclick="location.href = 'search.jsp';" id="search_button" >Search Page</button>
+    <button onclick="location.href = 'update.jsp';" id="search_button" >Update Page</button>
 </div>
 </html>
 <script>
@@ -73,8 +74,6 @@ input[type=submit] {
 			    		error: function(data){
 			    			if(data.status == 200){
 			    				uploadImage();
-			    				$('#failure_p').hide();
-				            	$('#success_p').show();
 			    			}else{
 				    			$('#success_p').hide();
 				    			$('#failure_p').show();
@@ -87,7 +86,7 @@ input[type=submit] {
 			debugger;
 			var formData = new FormData();
 			var rollno = document.getElementById("rollNumber").value;
-			var pic_url = "/home/sagar/SERVER_DATA/"+rollno;
+			var pic_url = "/home/sagar/git/repository/CRUD/src/main/webapp/img/"+rollno;
 			var file = $('input[name="profile_pic"').get(0).files[0];
 			formData.append("pic", file);
 			formData.append("pic_url",pic_url);
@@ -99,10 +98,12 @@ input[type=submit] {
 				url:"http://localhost:10001/CRUD/rest/student/upload",
 				data: formData,
 				success:function(data){
-					alert("image uploaded successfully!!");
+					$('#failure_p').hide();
+	            	$('#success_p').show();
 				},
 				error:function(){
-					alert("problem occurred while uploading data");
+					$('#success_p').hide();
+	    			$('#failure_p').show();
 				}
 			});
 		}
@@ -115,7 +116,7 @@ input[type=submit] {
 			var chemistrymarks = document.getElementById("chemistry").value;
 			var mathmarks = document.getElementById("maths").value;
 			var dob = document.getElementById("dob").value;
-			var pic_url = "/home/sagar/SERVER_DATA/"+rollno;
+			var pic_url = "/home/sagar/git/repository/CRUD/src/main/webapp/img/"+rollno;
 			var eqn = JSON.stringify({
 				"name": name,
 				"rollNumber": rollno,

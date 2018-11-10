@@ -56,7 +56,7 @@ public class Welcome {
 			@FormDataParam("pic_url")String path) throws IOException {
 		OutputStream outputStream = null;
 		try {
-			outputStream = new FileOutputStream(new File(path));
+			outputStream = new FileOutputStream(new File(path+".png"));
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 			return Response.status(500).entity("failure").build();
@@ -81,4 +81,16 @@ public class Welcome {
 		}
 		return Response.status(200).entity("success").build();
 	}
+	@POST
+    @Path("/update")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateStudent(Student std) {
+        StudentDao studentDao = new StudentDao();
+        if(studentDao.updateStudent(std) == 1) {
+            return Response.status(200).entity("success").build();
+        }else {
+            return Response.status(500).entity("failure").build();
+        }
+    }
 }
