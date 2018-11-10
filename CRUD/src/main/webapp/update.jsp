@@ -30,43 +30,49 @@ input[type=submit] {
 
 </head>
 <div class="container">
+	<p align="center">UPDATE STUDENT</p>
 	<form method="post">
 		
 		<label for="roll">Roll Number to update</label> 
 		<input type="text" id="rollNum" name="roll" required> 
 		
 		<input type="button" value="Search" onclick="search()">
-		<button onclick="location.href = 'index.jsp';" id="insert_button" >Insert Page</button>
-		<button onclick="location.href = 'search.jsp';" id="search_button" >Search Page</button>
+		<input type="button" id="insert_button" value="Insert page" onclick="insert_click()">
+		<input type="button" id="search_button" value="Search page" onclick="search_click()">
 	</form>
 </div>
 
 <div id="division" class="container">
+<form id="update_form" >
 		<label for="name">Student Name</label> 
-		<input type="text" id="name" name="name">
+		<input type="text" id="name" name="name" required="required"/>
 		 
 		<label for="physics">Physics</label> 
-		<input type="number" id="physics" name="physics">
+		<input type="number" id="physics" name="physics" required="required"/>
 		 
 		<label for="chemistry">Chemistry</label>
-		<input type="number" id="chemistry" name="chemistry">
+		<input type="number" id="chemistry" name="chemistry" required="required"/>
 		
 		<label for="Maths">Maths</label> 
-		<input type="number" id="maths" name="maths">
+		<input type="number" id="maths" name="maths" required="required"/>
 		
 		<label for="dob">DOB</label> 
-		<input type="date" id="dob" name="dob">
+		<input type="date" id="dob" name="dob" required="required"/>
 		 
 		<label for="total">Total</label>
-		<input type="number" id="total" name="total" readonly>
+		<input type="number" id="total" name="total" readonly/>
 		
+		<label for="grade">Grade</label>
+		<input type="text" id="grade" name="grade" readonly>
 		
 		<label for="profile_pic">Pic</label>
-		<input type="image" id="profile_pic"/> 
+		<input type="image"  src="img/index.png" id="profile_pic"/> 
 		
-		<input type="file" id="profile_pic" name="profile_pic" />
+		<input type="file" id="profile_pic"  name="profile_pic" />
 		
-		<button id="update_btn" onclick="update()">Update</button>
+		<input type="button" id="update_btn" value="Update" onclick="update()"/>
+		<input type="submit" style="display: none;"/>
+</form>
 		<p id="success_p" style="display: none;">Student updated successfully</p>
     	<p id="failure_p" style="display: none;">Error occurred while updating student</p>
 </div>
@@ -74,6 +80,11 @@ input[type=submit] {
 <script>
 	function search(){
 		var rollNum = document.getElementById("rollNum").value;
+		if(rollNum == null || rollNum == ""){
+			alert("Please enter roll number");
+			return;
+		}
+		
 		$.ajax({
 		    type: 'POST',
 		    contentType:"application/json" ,
@@ -85,10 +96,19 @@ input[type=submit] {
 		    	populateValues(data);
 		    },
 		    error: function(data) {
-		    	alert("Problem occurred while fetching data");
+		    	alert("No student with that roll number found");
 		    }
 		});
 	}
+	    function insert_click() {
+	    	location.reload();
+	        window.location.assign('index.jsp');
+	    }
+	    function search_click() {
+	    	location.reload();
+	        window.location.assign('search.jsp');
+	    }
+
 	
 	function populateValues(data){
 		document.getElementById("name").value = data.name;
@@ -96,28 +116,40 @@ input[type=submit] {
 		document.getElementById("chemistry").value = data.chemistryMarks;
 		document.getElementById("maths").value = data.mathMarks;
 		document.getElementById("dob").value = data.dob;
+		document.getElementById("grade").value = data.grade;
+		debugger;
 		document.getElementById('profile_pic').src = "img/"+document.getElementById("rollNum").value+".png";
 		total = data.physicsMarks + data.chemistryMarks + data.mathMarks;
 		$("#total").val(total);
 	}
 	
 	function update(){
-		$.ajax({
-    	 	type: 'POST', // GET
-    	 	contentType:"application/json" ,
-			url:"http://localhost:10001/CRUD/rest/student/update",
-        	dataType : "json", 
-        	data : formToJSON(),
-    		error: function(data){
-    			if(data.status == 200){
-    				uploadImage();
-    			}else{
-	    			$('#success_p').hide();
-	    			$('#failure_p').show();
-    			}
-    		}
-    	});
-		setTimeout(function(){ location.reload(); }, 1500);
+		var isvalidate = $("#update_form")[0].checkValidity();
+		debugger;
+		if(!isvalidate){
+			var $myForm = $("#update_form");
+			$myForm.find(':submit').click();
+		}else{
+			$.ajax({
+	    	 	type: 'POST', // GET
+	    	 	contentType:"application/json" ,
+				url:"http://localhost:10001/CRUD/rest/student/update",
+	        	dataType : "json", 
+	        	data : formToJSON(),
+	    		error: function(data){
+	    			if(data.status == 200){
+	    				debugger;
+	    				$('#failure_p').hide();
+		            	$('#success_p').show();
+	    				uploadImage();
+	    			}else{
+		    			$('#success_p').hide();
+		    			$('#failure_p').show();
+	    			}
+	    		}
+	    	});
+			setTimeout(function(){ location.reload(); }, 2000);
+		}
 	}
 	function uploadImage(){
 		var formData = new FormData();
@@ -143,6 +175,7 @@ input[type=submit] {
 				}
 			});
 		}
+		
 	}
 	
 	function formToJSON(){

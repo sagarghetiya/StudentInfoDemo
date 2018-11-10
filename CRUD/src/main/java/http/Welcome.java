@@ -41,10 +41,23 @@ public class Welcome {
 	public Response searchStudent(String rollNo) {
 		StudentDao studentDao = new StudentDao();
 		Student student = studentDao.getStudent(Integer.parseInt(rollNo));
-		if(student != null){
-			return Response.status(200).entity(student).build();
-		}else {
+		if(student == null){
 			return Response.serverError().build();
+		}else {
+			int total = student.getChemistryMarks()+student.getPhysicsMarks()+student.getMathMarks();
+			total=total/3;
+			if(total >= 85) {
+				student.setGrade("A");
+			}else if(total <85 && total>=70) {
+				student.setGrade("B");
+			}else if(total <70 && total>=50) {
+				student.setGrade("C");
+			}else if(total <50 && total>=35) {
+				student.setGrade("D");
+			}else {
+				student.setGrade("F");
+			}
+			return Response.status(200).entity(student).build();
 		}
 	}
 	

@@ -28,59 +28,66 @@ input[type=submit] {
 
 </style></head>
 <div class="container">
+	<p align="center">INSERT STUDENT</p>
     <form action="/CRUD/rest/student/add" id="myForm">
         <label for="name">Student Name</label> 
-        <input type="text" id="name" name="name" required>
+        <input type="text" id="name" name="name" required/>
          
         <label for="roll">Roll Number</label> 
-        <input type="number" id="rollNumber" name="roll" required>
+        <input type="number" id="rollNumber" name="roll" required/>
          
         <label for="physics">Physics</label> 
-        <input type="number" id="physics" name="physics" required>
+        <input type="number" id="physics" name="physics" required/>
          
         <label for="chemistry">Chemistry</label>
-        <input type="number" id="chemistry" name="chemistry" required>
+        <input type="number" id="chemistry" name="chemistry" required/>
         
         <label for="Maths">Maths</label> 
-        <input type="number" id="maths" name="maths" required>
+        <input type="number" id="maths" name="maths" required/>
          
         <label for="dob">Date Of Birth</label>
-        <input type="date" id="dob" name="dob" required> 
+        <input type="date" id="dob" name="dob" required/> 
         
         <label for="profile_pic">Pic</label>
         <input type="file" id="profile_pic" name="profile_pic" />
         
-        <input type="button" id="submit_button" value="Insert" onclick="submitForm()">
+        <input type="button" id="submit_button" value="Insert" onclick="submitForm()"/>
+        <input type="submit" style="display: none;"/>
     </form>
+    <input type="button" onclick="location.href = 'search.jsp';" value="Search page" id="search_button" >
+    <input type="button" onclick="location.href = 'update.jsp';" value="Update page" id="search_button" >
     <p id="success_p" style="display: none;">Student added successfully</p>
-    <p id="failure_p" style="display: none;">Error occurred while adding student</p>
-    <button onclick="location.href = 'search.jsp';" id="search_button" >Search Page</button>
-    <button onclick="location.href = 'update.jsp';" id="search_button" >Update Page</button>
+    <p id="failure_p" style="display: none;">Student already exists please enter another number</p>
 </div>
 </html>
 <script>
-	
+		
 		function submitForm(){
 			$('#failure_p').hide();
 			$('#success_p').hide();
-			
+			var isvalidate = $("#myForm")[0].checkValidity();
 			debugger;
-			$.ajax({
-			    	 	type: 'POST', // GET
-			    	 	contentType:"application/json" ,
-						url:"http://localhost:10001/CRUD/rest/student/add",
-			        	dataType : "json", 
-			        	data : formToJSON(),
-			    		error: function(data){
-			    			if(data.status == 200){
-			    				uploadImage();
-			    			}else{
-				    			$('#success_p').hide();
-				    			$('#failure_p').show();
-			    			}
-			    		}
-			    });
-			
+			if(isvalidate){
+				event.preventDefault();
+				$.ajax({
+				    	 	type: 'POST', // GET
+				    	 	contentType:"application/json" ,
+							url:"http://localhost:10001/CRUD/rest/student/add",
+				        	dataType : "json", 
+				        	data : formToJSON(),
+				    		error: function(data){
+				    			if(data.status == 200){
+				    				uploadImage();
+				    			}else{
+					    			$('#success_p').hide();
+					    			$('#failure_p').show();
+				    			}
+				    		}
+				    });
+			}else{
+				var $myForm = $("#myForm");
+				$myForm.find(':submit').click();
+			}
 		}
 		function uploadImage(){
 			debugger;

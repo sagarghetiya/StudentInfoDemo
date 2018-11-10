@@ -27,17 +27,17 @@ input[type=submit] {
 }
 
 </style>
-
 </head>
 <div class="container">
+<p align="center">SEARCH STUDENT</p>
 	<form method="post">
 		
 		<label for="roll">Roll Number</label> 
 		<input type="text" id="rollNum" name="roll" required> 
 		
 		<input type="button" value="Search" onclick="search()">
-		<button onclick="location.href = 'index.jsp';" id="insert_button" >Insert Page</button>
-		<button onclick="location.href = 'update.jsp';" id="update_button" >Update Page</button>
+		<input type="button" onclick="location.href = 'index.jsp';" value="Insert page" id="insert_button" >
+		<input type="button" onclick="location.href = 'update.jsp';" value="Update page" id="update_button" >
 	</form>
 </div>
 
@@ -57,13 +57,21 @@ input[type=submit] {
 		<label for="total">Total</label>
 		<input type="number" id="total" name="total" readonly>
 		
+		<label for="grade">Grade</label>
+		<input type="text" id="grade" name="grade" readonly>
+		
 		<label for="profile_pic">Pic</label>
-		<input type="image" id="profile_pic" readonly/> 
+		<input type="image" id="profile_pic" src="img/index.png" readonly/> 
 </div>
 </html>
 <script>
 	function search(){
 		var rollNum = document.getElementById("rollNum").value;
+		debugger;
+		if(rollNum == null || rollNum == ""){
+			alert("Please enter roll number");
+			return;
+		}
 		$.ajax({
 		    type: 'POST',
 		    contentType:"application/json" ,
@@ -75,7 +83,7 @@ input[type=submit] {
 		    	populateValues(data);
 		    },
 		    error: function(data) {
-		    	alert("Problem occurred while fetching data");
+		    	alert("No student with that roll number found");
 		    }
 		});
 	}
@@ -84,6 +92,7 @@ input[type=submit] {
 		document.getElementById("physics").value = data.physicsMarks;
 		document.getElementById("chemistry").value = data.chemistryMarks;
 		document.getElementById("maths").value = data.mathMarks;
+		document.getElementById("grade").value = data.grade;
 		document.getElementById('profile_pic').src = "img/"+document.getElementById("rollNum").value+".png";
 		total = data.physicsMarks + data.chemistryMarks + data.mathMarks;
 		$("#total").val(total);

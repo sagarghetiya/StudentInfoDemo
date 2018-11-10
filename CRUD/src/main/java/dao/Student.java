@@ -46,6 +46,16 @@ public class Student {
 	@Column(name = "pic_url")
 	private String picUrl;
 	
+	private String grade;
+	
+	public String getGrade() {
+		return this.grade;
+	}
+	
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
+	
 	public String getName() {
 		return name;
 	}
