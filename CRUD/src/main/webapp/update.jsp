@@ -31,14 +31,13 @@ input[type=submit] {
 </head>
 <div class="container">
 	<p align="center">UPDATE STUDENT</p>
+	<input type="button" value="Home page" onclick="home_click()">
 	<form method="post">
 		
 		<label for="roll">Roll Number to update</label> 
 		<input type="text" id="rollNum" name="roll" required> 
 		
 		<input type="button" value="Search" onclick="search()">
-		<input type="button" id="insert_button" value="Insert page" onclick="insert_click()">
-		<input type="button" id="search_button" value="Search page" onclick="search_click()">
 	</form>
 </div>
 
@@ -100,14 +99,11 @@ input[type=submit] {
 		    }
 		});
 	}
-	    function insert_click() {
+	    function home_click() {
 	    	location.reload();
 	        window.location.assign('index.jsp');
 	    }
-	    function search_click() {
-	    	location.reload();
-	        window.location.assign('search.jsp');
-	    }
+	   
 
 	
 	function populateValues(data){

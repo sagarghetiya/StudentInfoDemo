@@ -30,14 +30,13 @@ input[type=submit] {
 </head>
 <div class="container">
 <p align="center">SEARCH STUDENT</p>
+	<input type="button" onclick="location.href = 'index.jsp';" value="Home page" id="home_button" >
 	<form method="post">
 		
 		<label for="roll">Roll Number</label> 
 		<input type="text" id="rollNum" name="roll" required> 
 		
 		<input type="button" value="Search" onclick="search()">
-		<input type="button" onclick="location.href = 'index.jsp';" value="Insert page" id="insert_button" >
-		<input type="button" onclick="location.href = 'update.jsp';" value="Update page" id="update_button" >
 	</form>
 </div>
 
