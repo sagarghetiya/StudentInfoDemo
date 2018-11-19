@@ -32,10 +32,10 @@ margin-right: 480px;
 <div class="container">
 <p align="center">Home</p>
 <form method="post">
-<input type="button" onclick="location.href = 'index.jsp';" value="Home Page" id="home_button" >
-<input type="button" onclick="location.href = 'insert.jsp';" value="Insert page" id="insert_button" >
-<input type="button" onclick="location.href = 'update.jsp';" value="Update page" id="update_button" >
-<input type="button" onclick="location.href = 'search.jsp';" value="Search page" id="search_button" >
+<!--  <input type="button" onclick="location.href = 'index.jsp';" value="Home Student" id="home_button" >-->
+<input type="button" onclick="location.href = 'insert.jsp';" value="Insert student details" id="insert_button" >
+<input type="button" onclick="location.href = 'update.jsp';" value="Update student details" id="update_button" >
+<input type="button" onclick="location.href = 'search.jsp';" value="Search student details" id="search_button" >
 </form>
 </div>
 </html>

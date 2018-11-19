@@ -68,6 +68,10 @@ public class Welcome {
 			@FormDataParam("pic")InputStream in,
 			@FormDataParam("pic_url")String path) throws IOException {
 		OutputStream outputStream = null;
+		File file = new File(path+".png");
+		if(file.exists()) {
+			file.delete();
+		}
 		try {
 			outputStream = new FileOutputStream(new File(path+".png"));
 		} catch (FileNotFoundException e1) {
