@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -27,18 +28,18 @@ public class Welcome {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addStudent(Student std) {
 		StudentDao studentDao = new StudentDao();
-		if(studentDao.createStudent(std) == 1) {
+		if (studentDao.createStudent(std) == 1) {
 			return Response.status(200).entity("success").build();
-		}else {
+		} else {
 			return Response.status(500).entity("failure").build();
 		}
 	}
-
+	
 	@POST
-	@Path("/search")
+	@Path("/searchSingle")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response searchStudent(String rollNo) {
+	public Response searchSingleStudent(String rollNo) {
 		StudentDao studentDao = new StudentDao();
 		Student student = studentDao.getStudent(Integer.parseInt(rollNo));
 		if(student == null){
@@ -60,20 +61,59 @@ public class Welcome {
 			return Response.status(200).entity(student).build();
 		}
 	}
-	
+
+	@POST
+	@Path("/search")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response searchStudent(String rollNo) {
+		StudentDao studentDao = new StudentDao();
+		String[] rollNums = rollNo.replaceAll("[\"{}]", "").split(",");
+		int fromRollNum = Integer.parseInt(rollNums[0].split(":")[1]);
+		int toRollNum = Integer.parseInt(rollNums[1].split(":")[1]);
+		List<Student> studentlist = studentDao.getMultipleStudent(fromRollNum, toRollNum);
+		for (int i = 0; i < studentlist.size(); i++) {
+			// System.out.println(temp.getRollNumber()+" "+temp.getName()+"
+			// "+temp.getPhysicsMarks());
+			studentlist.set(i, CalGrade(studentlist.get(i)));
+		}
+		if(!studentlist.isEmpty()) {
+			return Response.status(200).entity(studentlist).build();
+		}else {
+			return Response.status(500).entity("failure").build();
+		}
+	}
+
+	public Student CalGrade(Student st) {
+		int total = st.getChemistryMarks() + st.getPhysicsMarks() + st.getMathMarks();
+		st.setTotal();
+		total = total / 3;
+		if (total >= 85) {
+			st.setGrade("A");
+		} else if (total < 85 && total >= 70) {
+			st.setGrade("B");
+		} else if (total < 70 && total >= 50) {
+			st.setGrade("C");
+		} else if (total < 50 && total >= 35) {
+			st.setGrade("D");
+		} else {
+			st.setGrade("F");
+		}
+		return st;
+	}
+
 	@POST
 	@Path("/upload")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	public Response uploadImage(
-			@FormDataParam("pic")InputStream in,
-			@FormDataParam("pic_url")String path) throws IOException {
+	public Response uploadImage(@FormDataParam("pic") InputStream in, @FormDataParam("pic_url") String path)
+			throws IOException {
 		OutputStream outputStream = null;
-		File file = new File(path+".png");
-		if(file.exists()) {
+		File file = new File(path + ".png");
+		if (file.exists()) {
 			file.delete();
 		}
 		try {
-			outputStream = new FileOutputStream(new File(path+".png"));
+			outputStream = new FileOutputStream(new File(path + ".png"));
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 			return Response.status(500).entity("failure").build();
@@ -93,21 +133,22 @@ public class Welcome {
 		} catch (IOException e) {
 			e.printStackTrace();
 			return Response.status(500).entity("failure").build();
-		}finally {
+		} finally {
 			outputStream.close();
 		}
 		return Response.status(200).entity("success").build();
 	}
+
 	@POST
-    @Path("/update")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response updateStudent(Student std) {
-        StudentDao studentDao = new StudentDao();
-        if(studentDao.updateStudent(std) == 1) {
-            return Response.status(200).entity("success").build();
-        }else {
-            return Response.status(500).entity("failure").build();
-        }
-    }
+	@Path("/update")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updateStudent(Student std) {
+		StudentDao studentDao = new StudentDao();
+		if (studentDao.updateStudent(std) == 1) {
+			return Response.status(200).entity("success").build();
+		} else {
+			return Response.status(500).entity("failure").build();
+		}
+	}
 }

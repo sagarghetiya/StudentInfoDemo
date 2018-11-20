@@ -1,41 +1,99 @@
 
-<html>
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
 <head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<style>
-input {
-   width: 100%;
-   padding: 12px;
-   border: 1px solid #ccc;
-   border-radius: 4px;
-   box-sizing: border-box;
-   margin-top: 6px;
-   margin-bottom: 16px;
+
+<style rel="stylesheet" type="text/css">
+.newclass {
+	margin-top: 150px;
 }
 
-/* Style the submit button */
-input[type=submit] {
-   background-color: #4CAF50;
-   color: white;
+img {
+    border-radius: 50%;
 }
-
-/* Style the container for inputs */
-.container {
-   background-color: #f1f1f1;
-   padding: 20px;
-margin-left: 480px;
-margin-right: 480px;   
-}
-
 </style>
+
+
+<!-- Site Title -->
+<title>Student information system</title>
+
+<link
+	href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700"
+	rel="stylesheet">
+
+<link rel="stylesheet" href="css/bootstrap.css">
+<link rel="stylesheet" href="css/main.css">
 </head>
-<div class="container">
-<p align="center">Home</p>
-<form method="post">
-<!--  <input type="button" onclick="location.href = 'index.jsp';" value="Home Student" id="home_button" >-->
-<input type="button" onclick="location.href = 'insert.jsp';" value="Insert student details" id="insert_button" >
-<input type="button" onclick="location.href = 'update.jsp';" value="Update student details" id="update_button" >
-<input type="button" onclick="location.href = 'search.jsp';" value="Search student details" id="search_button" >
-</form>
-</div>
+<body style="background-color: #04091e">
+	<header id="header" id="home">
+
+		<div class="container main-menu">
+			<div class="row align-items-center justify-content-between d-flex">
+				<div>
+					<h1 style="color: white">Student Information System</h1>
+				</div>
+			</div>
+		</div>
+	</header>
+	<!-- #header -->
+
+
+	<section class="newclass">
+		<div class="container">
+			<div class="row">
+			<a href="insert.jsp">
+				<div class="col-lg-4">
+				<div>
+					<img src="img/add.jpeg"  height="200" width="200" style="margin-left:70px ;margin-bottom:10px"/>
+				</div>
+					<div class="single-feature">
+						<div class="title">
+							<h4>Insert New Student Details</h4>
+						</div>
+						<div class="desc-wrap">
+							<p>Insert new Student details in the Organization.</p>
+							<a href="insert.jsp">Add Student Info</a>
+						</div>
+					</div>
+				</div>
+				</a>
+				<a href="search.jsp">
+				<div class="col-lg-4">
+				<div>
+					<img src="img/search.jpeg"  height="200" width="200" style="margin-left:70px ;margin-bottom:10px"/>
+				</div>
+					<div class="single-feature">
+						<div class="title">
+							<h4>Search Student Record</h4>
+						</div>
+						<div class="desc-wrap">
+							<p>Search one or multiple Student records based on their Roll
+								Number.</p>
+							<a href="search.jsp">Search Student Info</a>
+						</div>
+					</div>
+				</div>
+				</a>
+				<a href="update.jsp">
+				<div class="col-lg-4">
+				<div>
+					<img src="img/update.jpeg"  height="200" width="200" style="margin-left:70px ;margin-bottom:10px"/>
+				</div>
+					<div class="single-feature">
+						<div class="title">
+							<h4>Update Student Record</h4>
+						</div>
+						<div class="desc-wrap">
+							<p>Update Student's information by searching via Roll Number.
+							</p>
+							<a href="update.jsp">Update Student Info</a>
+						</div>
+					</div>
+				</div>
+				</a>
+			</div>
+		</div>
+	</section>
+	
+</body>
 </html>

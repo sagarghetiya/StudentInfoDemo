@@ -48,6 +48,16 @@ public class Student {
 	
 	private String grade;
 	
+	private int total;
+
+	public void setTotal() {
+	this.total = this.physicsMarks + this.chemistryMarks + this.mathMarks;
+	}
+
+	public int getTotal() {
+	return this.total;
+	}
+	
 	public String getGrade() {
 		return this.grade;
 	}

@@ -1,9 +1,47 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+
+<link rel="stylesheet" crossorigin="anonymous"
+	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=">
+<link rel="stylesheet" crossorigin="anonymous"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+	integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=">
+<link rel="stylesheet" crossorigin="anonymous"
+	href="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.15.5/css/ui.jqgrid.min.css"
+	integrity="sha256-3oIi71IMpsoA+8ctSTIM+6ScXYjyZEV06q6bbK6CjsM=">
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<style>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+	integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+	crossorigin="anonymous"></script>
+
+<script src="js/superfish.min.js"></script>
+<script src="js/jquery.ajaxchimp.min.js"></script>
+<script src="js/jquery.magnific-popup.min.js"></script>
+<script src="js/jquery.tabs.min.js"></script>
+<script src="js/jquery.nice-select.min.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script>
+        $.jgrid = $.jgrid || {};
+        $.jgrid.no_legacy_api = true;
+    </script>
+<script crossorigin="anonymous"
+	src="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.15.5/jquery.jqgrid.min.js"
+	integrity="sha256-ELi2cs17gL2MqNzkRkogxZsVLmL+oWfeVOwZQLcp8ek="></script>
+
+<style rel="stylesheet" type="text/css">
+
+label {
+ margin-top: 6px;
+    margin-bottom: 16px;
+    width: 50%;
+ 	color: white;
+}
 input {
-    width: 100%;
+    width: 50%;
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -11,26 +49,49 @@ input {
     margin-top: 6px;
     margin-bottom: 16px;
 }
-
-/* Style the submit button */
-input[type=submit] {
-    background-color: #4CAF50;
-    color: white;
+h3{
+	color: white;
 }
+</style>
 
-/* Style the container for inputs */
-.container {
-    background-color: #f1f1f1;
-    padding: 20px;
-     margin-left: 480px;
-     margin-right: 480px;   
-}
+<title>Student information system</title>
 
-</style></head>
-<div class="container">
-	<p align="center">INSERT STUDENT</p>
-    <input type="button" onclick="location.href = 'index.jsp';" value="Home page" id="home_button" >
-    <form action="/CRUD/rest/student/add" id="myForm">
+<link
+	href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700"
+	rel="stylesheet">
+<!-- CSS FILES -->
+<link rel="stylesheet" href="css/bootstrap.css">
+<link rel="stylesheet" href="css/jqgrid.css">
+<link rel="stylesheet" href="css/main.css">
+
+</head>
+<body style="background-color: #04091e">
+
+
+	<header id="header" id="home" style="background-color: rgba(0,0,0,1)">
+
+		<div class="container main-menu" style="opacity: 1.0">
+			<div class="row align-items-center justify-content-between d-flex" >
+				<div id="logo">
+					<h3 style="color: white">Insert Student Details</h3>
+				</div>
+				<nav id="nav-menu-container">
+					<ul class="nav-menu">
+						<li><a href="index.jsp" >Home</a></li>
+						<li><a href="search.jsp">Search Student Info</a></li>
+						<li><a href="update.jsp">Update Student Info</a></li>
+					</ul>
+				</nav>
+				<!-- #nav-menu-container -->
+			</div>
+		</div>
+
+	</header>
+	<!-- #header -->
+
+	<div style="margin-top:80px">
+		<div style="margin-left:450px">
+	<form action="/CRUD/rest/student/add" id="myForm">
         <label for="name">Student Name</label> 
         <input type="text" id="name" name="name" required/>
          
@@ -52,13 +113,19 @@ input[type=submit] {
         <label for="profile_pic">Pic</label>
         <input type="file" id="profile_pic" name="profile_pic" />
         
-        <input type="button" id="submit_button" value="Insert" onclick="submitForm()"/>
+        <input type="button" style="background-color: #FF5006 ;border: 1px solid #000; margin-top:20px;  margin-bottom:20px;
+		    border-color: #FF5006 ; color:#fff ;" id="submit_button" value="Insert" onclick="submitForm()"/>
         <input type="submit" style="display: none;"/>
-    </form>
-    <p id="success_p" style="display: none;">Student added successfully</p>
-    <p id="failure_p" style="display: none;">Student already exists please enter another number</p>
-</div>
+        
+    	</form>
+		<h3 id="success_p" style="display: none; color:#fff" >Student added successfully</h3>
+   		<h3 id="failure_p" style="display: none; color:#fff">Student with mentioned roll number already exists please enter another roll number</h3>		
+       </div>
+	</div>
+
+</body>
 </html>
+
 <script>
 		
 		function submitForm(){
@@ -122,7 +189,7 @@ input[type=submit] {
 			var chemistrymarks = document.getElementById("chemistry").value;
 			var mathmarks = document.getElementById("maths").value;
 			var dob = document.getElementById("dob").value;
-			var pic_url = "/home/sagar/git/repository/CRUD/src/main/webapp/img/"+rollno;
+			var pic_url = "/home/sagar/git/repository/CRUD/src/main/webapp/img/"+rollno+".png";
 			var eqn = JSON.stringify({
 				"name": name,
 				"rollNumber": rollno,
