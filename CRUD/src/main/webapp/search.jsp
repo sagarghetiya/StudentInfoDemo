@@ -27,6 +27,9 @@
     <script>
         $.jgrid = $.jgrid || {};
         $.jgrid.no_legacy_api = true;
+        $(document).ready(function() {
+        	  jQuery.fn.carousel.Constructor.TRANSITION_DURATION = 2000  // 2 seconds
+        	});
     </script>
     
     <script>
@@ -57,12 +60,12 @@
 			if(i==0){
 				$(".carousel-indicators").append("<li data-target="+"#myCarousel"+ " data-slide-to="+i+" class="+"active"+"></li>");
 				var path = "img/"+student.rollNumber+".png";
-				$(".carousel-inner").append("<div class="+"'carousel-item active'"+"><img style='margin-left:340px; margin-bottom:100px;' src="+path+" width='600' height='200'></div>");
+				$(".carousel-inner").append("<div style='margin-left:340px; margin-bottom:100px;' class="+"'carousel-item active'"+"><img src="+path+" width='600' height='400'><table style='margin-left:270px'><tr><td style='color: white'>Name : "+student.name+"</td></tr><tr><td style='color: white'>Roll Number : "+student.rollNumber+"</td></tr></table></div>");
 			}
 			else{
 				var path = "img/"+student.rollNumber+".png";
 				$(".carousel-indicators").append("<li data-target="+"#myCarousel"+ " data-slide-to="+i+"></li>");
-				$(".carousel-inner").append("<div style='margin-left:340px; margin-bottom:100px;' class="+"'carousel-item'"+"><img src="+path+" width='600' height='200'></div>");
+				$(".carousel-inner").append("<div style='margin-left:340px; margin-bottom:100px;' class="+"'carousel-item'"+"><img src="+path+" width='600' height='400'><table style='margin-left:270px'><tr><td style='color: white'>Name : "+student.name+"</td></tr><tr><td style='color: white'>Roll Number : "+student.rollNumber+"</td></tr></table></div>");
 		
 			}
 					
@@ -126,9 +129,19 @@
 	}
     </script>
  <style rel="stylesheet" type="text/css">
+ .carousel-inner .carousel-item {
+  transition: -webkit-transform 1s ease;
+  transition: transform 1s ease;
+  transition: transform 1s ease, -webkit-transform 1s ease;
+}
 .newclass {
 	margin-top: 200px;
 	margin-left: 300px;
+}
+th, td {
+    border-bottom: 1px solid #ddd;
+     padding: 15px;
+    text-align: center;
 }
 </style>
 
@@ -148,7 +161,7 @@
 				</div>
 				<nav id="nav-menu-container">
 					<ul class="nav-menu">
-						<li><a href="index.jsp">Home</a></li>
+						<li><a href="home.jsp">Home</a></li>
 						<li><a href="insert.jsp">Insert Student Info</a></li>
 						<li><a href="update.jsp">Update Student Info</a></li>
 					</ul>

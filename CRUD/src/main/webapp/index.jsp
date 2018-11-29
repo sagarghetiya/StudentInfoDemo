@@ -3,6 +3,8 @@
 <html lang="zxx" class="no-js">
 <head>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 <style rel="stylesheet" type="text/css">
 .newclass {
 	margin-top: 150px;
@@ -35,65 +37,36 @@ img {
 			</div>
 		</div>
 	</header>
-	<!-- #header -->
-
-
-	<section class="newclass">
-		<div class="container">
-			<div class="row">
-			<a href="insert.jsp">
-				<div class="col-lg-4">
-				<div>
-					<img src="img/add.jpeg"  height="200" width="200" style="margin-left:70px ;margin-bottom:10px"/>
-				</div>
-					<div class="single-feature">
-						<div class="title">
-							<h4>Insert New Student Details</h4>
-						</div>
-						<div class="desc-wrap">
-							<p>Insert new Student details in the Organization.</p>
-							<a href="insert.jsp">Add Student Info</a>
-						</div>
-					</div>
-				</div>
-				</a>
-				<a href="search.jsp">
-				<div class="col-lg-4">
-				<div>
-					<img src="img/search.jpeg"  height="200" width="200" style="margin-left:70px ;margin-bottom:10px"/>
-				</div>
-					<div class="single-feature">
-						<div class="title">
-							<h4>Search Student Record</h4>
-						</div>
-						<div class="desc-wrap">
-							<p>Search one or multiple Student records based on their Roll
-								Number.</p>
-							<a href="search.jsp">Search Student Info</a>
-						</div>
-					</div>
-				</div>
-				</a>
-				<a href="update.jsp">
-				<div class="col-lg-4">
-				<div>
-					<img src="img/update.jpeg"  height="200" width="200" style="margin-left:70px ;margin-bottom:10px"/>
-				</div>
-					<div class="single-feature">
-						<div class="title">
-							<h4>Update Student Record</h4>
-						</div>
-						<div class="desc-wrap">
-							<p>Update Student's information by searching via Roll Number.
-							</p>
-							<a href="update.jsp">Update Student Info</a>
-						</div>
-					</div>
-				</div>
-				</a>
-			</div>
-		</div>
-	</section>
+	<div style="margin-top:80px">
+		<div style="margin-left:450px">
+	<form action="/CRUD/rest/student/add" id="myForm">
+        <label for="login" style="color:#fff">Login ID</label> 
+        <input type="text" id="login_id" name="login_id" required/>
+         
+        <label for="password" style="color:#fff">Password</label> 
+        <input type="password" id="password" name="password" required/>
+         
+        <input type="button" style="background-color: #FF5006 ;border: 1px solid #000; margin-top:20px;  margin-bottom:20px;
+		    border-color: #FF5006 ; color:#fff ;" id="submit_button" value="Login" onclick="login()"/>
+        <input type="submit" style="display: none;"/>
+        
+    	</form>
+   		<h3 id="failure_p" style="display: none; color:#fff">Please enter a valid login id or password</h3>		
+       </div>
+	</div>
+	</body>
+	</html>
+	<script>
+	function login(){
+		var login_id = document.getElementById("login_id").value;
+		var password = document.getElementById("password").value;
+		if((login_id == "admin" && password == "admin123") || (login_id == "admin123" && password == "admin123")){
+			window.location.href="/CRUD/home.jsp";
+		}else{
+			debugger;
+			$('#failure_p').show();
+		}
+	}
+	</script>
 	
-</body>
-</html>
+	

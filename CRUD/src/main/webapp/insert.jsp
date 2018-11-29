@@ -77,7 +77,7 @@ h3{
 				</div>
 				<nav id="nav-menu-container">
 					<ul class="nav-menu">
-						<li><a href="index.jsp" >Home</a></li>
+						<li><a href="home.jsp" >Home</a></li>
 						<li><a href="search.jsp">Search Student Info</a></li>
 						<li><a href="update.jsp">Update Student Info</a></li>
 					</ul>
