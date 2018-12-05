@@ -14,6 +14,9 @@
 		<property name="format_sql">true</property>
 		<property name="hbm2ddl.auto">update </property>
 		<mapping class="dao.Student" />
+		<mapping class="dao.Message" />
+		<mapping class="dao.Login" />
+		
 
 	</session-factory>
 </hibernate-configuration>

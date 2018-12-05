@@ -17,6 +17,8 @@ public class HibernateUtil {
 			Configuration configuration = new Configuration();
 			configuration.configure("hibernate.cfg.xml");
 			configuration.addAnnotatedClass(dao.Student.class);
+			configuration.addAnnotatedClass(dao.Message.class);
+			configuration.addAnnotatedClass(dao.Login.class);
 			StandardServiceRegistryBuilder ssrb = new StandardServiceRegistryBuilder()
 					.applySettings(configuration.getProperties());
 			sessionFactory = configuration.buildSessionFactory(ssrb.build());

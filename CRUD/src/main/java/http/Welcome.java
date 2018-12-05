@@ -6,7 +6,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -17,11 +21,45 @@ import javax.ws.rs.core.Response;
 
 import com.sun.jersey.multipart.FormDataParam;
 
+import dao.Login;
+import dao.Message;
+import dao.MessageDao;
 import dao.Student;
 import dao.StudentDao;
 
 @Path("/student")
 public class Welcome {
+	public static String toUser = "admin";
+	
+	@POST
+	@Path("/signup")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response login(Login login) {
+		StudentDao studentDao = new StudentDao();
+		if (studentDao.createLoginUser(login) == 1) {
+			return Response.status(200).entity("success").build();
+		} else {
+			return Response.status(500).entity("failure").build();
+		}
+	}
+	
+	@POST
+	@Path("/login")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	public Response login(@FormDataParam("user")String user,
+			@FormDataParam("password")String password) {
+		toUser = user;
+		StudentDao studentDao = new StudentDao();
+		Login login = studentDao.getLoginUser(user, password);
+		if(login == null){
+			return Response.serverError().build();
+		}else {
+			return Response.status(200).entity("success").build();
+		}
+	}
+	
+	
 	@POST
 	@Path("/add")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -148,6 +186,69 @@ public class Welcome {
 		if (studentDao.updateStudent(std) == 1) {
 			return Response.status(200).entity("success").build();
 		} else {
+			return Response.status(500).entity("failure").build();
+		}
+	}
+	
+	@POST
+	@Path("/sendmessage")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response sendMessage(@FormDataParam("message")String message,
+			@FormDataParam("toUser")String to_user) {
+		Message msgObj = new Message();
+		msgObj.setFromUser(toUser);
+		msgObj.setMessage(message);
+		msgObj.setToUser(to_user);
+		TimeZone tz = TimeZone.getTimeZone("GMT");
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'"); // Quoted "Z" to indicate UTC, no timezone offset
+		df.setTimeZone(tz);
+		String nowAsISO = df.format(new Date(System.currentTimeMillis()));
+		msgObj.setSentOn(nowAsISO);
+		MessageDao messageDao = new MessageDao();
+		if(messageDao.insertMessage(msgObj) == 1) {
+			return Response.status(200).entity("success").build();
+		}else {
+			return Response.status(500).entity("failure").build();
+		}
+	}
+	
+	@POST
+	@Path("/getmessages")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getMessages() {
+		MessageDao messageDao = new MessageDao();
+		List<Message> messageList = messageDao.getMessages(toUser);
+		if(!messageList.isEmpty()) {
+			return Response.status(200).entity(messageList).build();
+		}else {
+			return Response.status(500).entity("failure").build();
+		}
+	}
+	
+	@POST
+	@Path("/deletemessage")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	public Response deleteMessage(@FormDataParam("id") int messageId) {
+		MessageDao messageDao = new MessageDao();
+		if(messageDao.deleteMessage(messageId) == 1) {
+			return Response.status(200).entity("success").build();
+		}else {
+			return Response.status(500).entity("failure").build();
+		}
+	}
+	
+	@POST
+	@Path("/getloginusers")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getLoginUsers(){
+		StudentDao studentDao = new StudentDao();
+		List<Login> allUsers = studentDao.getAllUsers(toUser);
+		if(!allUsers.isEmpty()) {
+			return Response.status(200).entity(allUsers).build();
+		}else {
 			return Response.status(500).entity("failure").build();
 		}
 	}

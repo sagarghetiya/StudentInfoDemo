@@ -21,9 +21,7 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.15.5/css/ui.jqgrid.min.css"
           integrity="sha256-3oIi71IMpsoA+8ctSTIM+6ScXYjyZEV06q6bbK6CjsM=">
     <link rel="stylesheet" type="text/css" href="css/jquery-ui.css"/>
-
-	
-  
+ 
     <script>
         $.jgrid = $.jgrid || {};
         $.jgrid.no_legacy_api = true;
@@ -35,8 +33,8 @@
     <script>
     
     function search(){
-    	$("#list_carousel").empty();
-    	$("#div_carousel").empty();
+    	
+    	
     	$('#grid1b').jqGrid('GridUnload');
 		$.ajax({
 		    type: 'POST',
@@ -46,7 +44,7 @@
 		    dataType : "json", 
 		    success: function(data){
 		    	populateGrid(data);
-		    	corousal(data);
+		    	
 		    },
 		    error: function(data) {
 		    	alert("No student with that roll number found");
@@ -54,28 +52,7 @@
 		});
 	}
     
-    function corousal(students)
-    {
-    	debugger;
-    	for (i = 0; i < students.length; i=i+3) {
-			if(i==0){
-				$(".carousel-indicators").append("<li data-target="+"#myCarousel"+ " data-slide-to="+i+" class="+"active"+"></li>");
-				var path1 = "img/"+students[i].rollNumber+".png";
-				var path2 = "img/"+students[i+1].rollNumber+".png";
-				var path3 = "img/"+students[i+2].rollNumber+".png";
-				$(".carousel-inner").append("<div style='margin-left:340px; margin-bottom:100px;' class="+"'carousel-item active'"+"><img src="+path1+" width='200' height='200'><img style='margin-left:10px;' src="+path2+" width='200' height='200'><img style='margin-left:10px;' src="+path3+" width='200' height='200'><div class='flex-container'><div><table style='margin-left:20px'><tr><td style='color: white'>Name : "+students[i].name+"</td></tr><tr><td style='color: white'>Roll Number : "+students[i].rollNumber+"</td></tr></table></div><div><table style='margin-left:60px'><tr><td style='color: white'>Name : "+students[i+1].name+"</td></tr><tr><td style='color: white'>Roll Number : "+students[i+1].rollNumber+"</td></tr></table></div><div><table style='margin-left:80px'><tr><td style='color: white'>Name : "+students[i+2].name+"</td></tr><tr><td style='color: white'>Roll Number : "+students[i+2].rollNumber+"</td></tr></table></div></div></div>");
-			}
-			else{
-				var path1 = "img/"+students[i].rollNumber+".png";
-				var path2 = "img/"+students[i+1].rollNumber+".png";
-				var path3 = "img/"+students[i+2].rollNumber+".png";
-				$(".carousel-indicators").append("<li data-target="+"#myCarousel"+ " data-slide-to="+i+"></li>");
-				$(".carousel-inner").append("<div style='margin-left:340px; margin-bottom:100px;' class="+"'carousel-item'"+"><img src="+path1+" width='200' height='200'><img style='margin-left:10px;' src="+path2+" width='200' height='200'><img style='margin-left:10px;' src="+path3+" width='200' height='200'><div class='flex-container'><div><table style='margin-left:20px'><tr><td style='color: white'>Name : "+students[i].name+"</td></tr><tr><td style='color: white'>Roll Number : "+students[i].rollNumber+"</td></tr></table></div><div><table style='margin-left:60px'><tr><td style='color: white'>Name : "+students[i+1].name+"</td></tr><tr><td style='color: white'>Roll Number : "+students[i+1].rollNumber+"</td></tr></table></div><div><table style='margin-left:80px'><tr><td style='color: white'>Name : "+students[i+2].name+"</td></tr><tr><td style='color: white'>Roll Number : "+students[i+2].rollNumber+"</td></tr></table></div></div></div>");
-		
-			}			
-		}
-    }
-	
+  
 	function populateGrid(data_passed) {
         "use strict";
         $("#grid1b").jqGrid({
@@ -147,11 +124,6 @@ th, td {
      padding: 15px;
     text-align: center;
 }
-.flex-container {
-        display: flex;
-        align-items: center; /* Use another value to see the result */
-        width: 100%;
-      }
 </style>
 
 <title>Student Information System</title>
@@ -173,6 +145,8 @@ th, td {
 						<li><a href="home.jsp">Home</a></li>
 						<li><a href="insert.jsp">Insert Student Info</a></li>
 						<li><a href="update.jsp">Update Student Info</a></li>
+						<li><a href="messages.jsp">Messages</a></li>
+						<li><a href="index.jsp">Logout</a></li>
 					</ul>
 				</nav>
 				<!-- #nav-menu-container -->
@@ -198,18 +172,6 @@ th, td {
 	<div style="margin-top:200px;margin-left:180px"><table id="grid1b"></table></div>
 
 	<div style="margin-top:200px;margin-left:180px"><table id="grid1b"></table></div>
-      				<div id="myCarousel" class="carousel slide" data-ride="carousel">
-      					<ul id="list_carousel" class="carousel-indicators">      						
-      					</ul>
-      					<div id="div_carousel" class="carousel-inner">
-      					</div>
-      					
-      					<a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
-      						<span class="carousel-control-prev-icon"></span>
-    					</a>
-    					<a class="carousel-control-next" href="#myCarousel" data-slide="next">
-      						<span class="carousel-control-next-icon"></span>
-    					</a>
-     				</div>
+      			
 </body>
 </html>

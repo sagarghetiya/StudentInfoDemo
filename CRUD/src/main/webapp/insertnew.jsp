@@ -73,18 +73,14 @@ h3{
 		<div class="container main-menu" style="opacity: 1.0">
 			<div class="row align-items-center justify-content-between d-flex" >
 				<div id="logo">
-					<h3 style="color: white">Insert Student Details</h3>
+					<h3 style="color: white">Insert User Details</h3>
 				</div>
-				<nav id="nav-menu-container">
+					<!-- #nav-menu-container -->
+					<nav id="nav-menu-container">
 					<ul class="nav-menu">
-						<li><a href="home.jsp" >Home</a></li>
-						<li><a href="searchhome.jsp">Search Student Info</a></li>
-						<li><a href="update.jsp">Update Student Info</a></li>
-						<li><a href="messages.jsp">Messages</a></li>
-						<li><a href="index.jsp">Logout</a></li>
+						<li><a href="index.jsp">Login</a></li>
 					</ul>
 				</nav>
-				<!-- #nav-menu-container -->
 			</div>
 		</div>
 
@@ -94,34 +90,20 @@ h3{
 	<div style="margin-top:80px">
 		<div style="margin-left:450px">
 	<form action="/CRUD/rest/student/add" id="myForm">
-        <label for="name">Student Name</label> 
-        <input type="text" id="name" name="name" required/>
+        <label for="login_id">Login ID</label> 
+        <input type="text" id="login_id" name="login_id" required/>
          
-        <label for="roll">Roll Number</label> 
-        <input type="number" id="rollNumber" name="roll" required/>
+        <label for="pass">Password</label> 
+        <input type="password" id="pass" name="pass" required/>
          
-        <label for="physics">Physics</label> 
-        <input type="number" id="physics" name="physics" max="100" min="0" required/>
-         
-        <label for="chemistry">Chemistry</label>
-        <input type="number" id="chemistry" name="chemistry" max="100" min="0" required/>
-        
-        <label for="Maths">Maths</label> 
-        <input type="number" id="maths" name="maths" max="100" min="0" required/>
-         
-        <label for="dob">Date Of Birth</label>
-        <input type="date" id="dob" name="dob" max='2000-01-01' required/> 
-        
-        <label for="profile_pic">Pic</label>
-        <input type="file" id="profile_pic" name="profile_pic" />
         
         <input type="button" style="background-color: #FF5006 ;border: 1px solid #000; margin-top:20px;  margin-bottom:20px;
 		    border-color: #FF5006 ; color:#fff ;" id="submit_button" value="Insert" onclick="submitForm()"/>
         <input type="submit" style="display: none;"/>
         
     	</form>
-		<h3 id="success_p" style="display: none; color:#fff" >Student added successfully</h3>
-   		<h3 id="failure_p" style="display: none; color:#fff">Student with mentioned roll number already exists please enter another roll number</h3>		
+		<h3 id="success_p" style="display: none; color:#fff" >User created successfully</h3>
+   		<h3 id="failure_p" style="display: none; color:#fff">Login id already exists please try again!!</h3>		
        </div>
 	</div>
 
@@ -134,18 +116,18 @@ h3{
 			$('#failure_p').hide();
 			$('#success_p').hide();
 			var isvalidate = $("#myForm")[0].checkValidity();
-			debugger;
 			if(isvalidate){
 				event.preventDefault();
 				$.ajax({
 				    	 	type: 'POST', // GET
 				    	 	contentType:"application/json" ,
-							url:"http://localhost:10001/CRUD/rest/student/add",
+							url:"http://localhost:10001/CRUD/rest/student/signup",
 				        	dataType : "json", 
 				        	data : formToJSON(),
 				    		error: function(data){
 				    			if(data.status == 200){
-				    				uploadImage();
+				    				$('#success_p').show();
+					    			$('#failure_p').hide();
 				    			}else{
 					    			$('#success_p').hide();
 					    			$('#failure_p').show();
@@ -157,49 +139,14 @@ h3{
 				$myForm.find(':submit').click();
 			}
 		}
-		function uploadImage(){
-			debugger;
-			var formData = new FormData();
-			var rollno = document.getElementById("rollNumber").value;
-			var pic_url = "/home/sagar/git/repository/CRUD/src/main/webapp/img/"+rollno;
-			var file = $('input[name="profile_pic"').get(0).files[0];
-			formData.append("pic", file);
-			formData.append("pic_url",pic_url);
-			debugger;
-			$.ajax({
-				type:"POST",
-				processData: false,
-				contentType: false,
-				url:"http://localhost:10001/CRUD/rest/student/upload",
-				data: formData,
-				success:function(data){
-					$('#failure_p').hide();
-	            	$('#success_p').show();
-				},
-				error:function(){
-					$('#success_p').hide();
-	    			$('#failure_p').show();
-				}
-			});
-		}
 		
 		function formToJSON() 
 		{
-			var name = document.getElementById("name").value;
-			var rollno = document.getElementById("rollNumber").value;
-			var physicsmarks = document.getElementById("physics").value;
-			var chemistrymarks = document.getElementById("chemistry").value;
-			var mathmarks = document.getElementById("maths").value;
-			var dob = document.getElementById("dob").value;
-			var pic_url = "/home/sagar/git/repository/CRUD/src/main/webapp/img/"+rollno+".png";
+			var login_id = document.getElementById("login_id").value;
+			var pass = document.getElementById("pass").value;
 			var eqn = JSON.stringify({
-				"name": name,
-				"rollNumber": rollno,
-				"physicsMarks": physicsmarks,
-				"chemistryMarks": chemistrymarks,
-				"mathMarks": mathmarks,
-		        "dob": dob,// serializes the form's elements.
-		        "picUrl":pic_url
+				"loginId": login_id,
+				"password": pass
 	        });
 			return eqn;
 		}

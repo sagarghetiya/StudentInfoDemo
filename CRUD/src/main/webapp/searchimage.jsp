@@ -45,7 +45,7 @@
 		    data : formToJSON(),
 		    dataType : "json", 
 		    success: function(data){
-		    	populateGrid(data);
+		    	
 		    	corousal(data);
 		    },
 		    error: function(data) {
@@ -76,44 +76,7 @@
 		}
     }
 	
-	function populateGrid(data_passed) {
-        "use strict";
-        $("#grid1b").jqGrid({
-            colModel: [
-                { name: "rollNumber", label: "Roll Number", key:true, width: 100, align: "center", sorttype: "number" },
-                { name: "name", label: "Name", width: 100, align: "center" },
-                { name: "dob", label: "Date of Birth", width: 100, align: "center", sorttype: "date",
-                    formatter: "date", formatoptions: { newformat: "d-M-Y" } },
-                { name: "physicsMarks", label: "Physics Marks", width: 100, template: "number", align: "center"},
-                { name: "chemistryMarks", label: "Chemistry Marks", width: 100, template: "number", align: "center"},
-                { name: "mathMarks", label: "Math Marks", width: 100, template: "number", align: "center"},
-                { name: "total", label: "Total Marks", width: 100, template: "number", align: "center"},
-                { name: "grade", label: "Grade", width: 100, align: "center",
-                	formatter: "select",
-                    formatoptions: { value: "A:A;B:B;C:C;D:D;F:F", defaultValue: "A	" },
-                    stype: "select",
-                    searchoptions: { value: ":Any;A:A;B:B;C:C;D:D;F:F" } },
-                { name: "profile_pic", label: "Profile pic", formatter: profile_formatter, align: "center", search:false},
-            ],
-            data: data_passed,
-            iconSet: "fontAwesome",
-            idPrefix: "g5_",
-            rownumbers: true,
-            sortname: "rollNumber",
-            sortorder: "asc",
-            threeStateSort: true,
-            sortIconsBeforeText: true,
-            headertitles: true,
-            toppager: true,
-            pager: true,
-            rowNum: 5,
-            viewrecords: true,
-            searching: {
-                defaultSearch: "cn"
-            },
-        }).jqGrid("filterToolbar");
-    }
-	
+
 	function profile_formatter(options, rowObject) 
     {	
 		var cellvalue = rowObject.rowData.rollNumber;
@@ -123,11 +86,11 @@
     }
 	function formToJSON() 
 	{
-		var from_rollNum = document.getElementById("from_rollNum").value;
-		var to_roll = document.getElementById("to_roll").value;
+		//var from_rollNum = document.getElementById("from_rollNum").value;
+		//var to_roll = document.getElementById("to_roll").value;
 		var eqn = JSON.stringify({
-			"from_rollNum": from_rollNum,
-			"to_roll": to_roll
+			"from_rollNum": 1,
+			"to_roll": 10000
         });
 		return eqn;
 	}
@@ -173,29 +136,19 @@ th, td {
 						<li><a href="home.jsp">Home</a></li>
 						<li><a href="insert.jsp">Insert Student Info</a></li>
 						<li><a href="update.jsp">Update Student Info</a></li>
+						<li><a href="messages.jsp">Messages</a></li>
+						<li><a href="index.jsp">Logout</a></li>
 					</ul>
 				</nav>
 				<!-- #nav-menu-container -->
 			</div>
 		</div>
-		<div class="container main-menu">
-			<div style="margin-left:180px">
-			<input id="from_rollNum" type="number" name="fromrollnumber"
-				placeholder="From Roll Number" onfocus="this.placeholder = ''"
-				onblur="this.placeholder = 'From Roll Number'"> <input
-				type="number" id="to_roll" name="to_rollNum" placeholder="To Roll Number"
-				onfocus="this.placeholder = ''"
-				onblur="this.placeholder = 'To Roll Number'">
-
-				<button style="background-color: #FF5006 ;border: 1px solid #000;
-		    border-color: #FF5006 ; color:#fff ; width:150px ; padding: 2px 4px;" onclick="search()">Submit</button>
-			</div>
-		</div>
+		
 
 	</header>
 	<!-- #header -->
 	
-	<div style="margin-top:200px;margin-left:180px"><table id="grid1b"></table></div>
+	<script>search();</script>
 
 	<div style="margin-top:200px;margin-left:180px"><table id="grid1b"></table></div>
       				<div id="myCarousel" class="carousel slide" data-ride="carousel">

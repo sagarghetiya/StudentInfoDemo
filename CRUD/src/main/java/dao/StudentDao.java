@@ -64,4 +64,44 @@ public class StudentDao {
 		else
 			return null;
 	}
+	
+	public int createLoginUser(Login login) {
+		Session sessionFactory = HibernateUtil.getSessionFactory().openSession();
+		try {
+			Transaction transaction = sessionFactory.beginTransaction();
+			sessionFactory.save(login);
+			transaction.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		} finally {
+			sessionFactory.close();
+		}
+		return 1;
+	}
+	
+	@SuppressWarnings("deprecation")
+	public Login getLoginUser(String loginId, String password) {
+		Session sessionFactory = HibernateUtil.getSessionFactory().openSession();
+		Criteria criteria = sessionFactory.createCriteria(Login.class);
+		criteria.add(Restrictions.eq("loginId", loginId));
+		criteria.add(Restrictions.eq("password", password));
+		@SuppressWarnings("unchecked")
+		List<Login> studentList = criteria.list();
+		if (!studentList.isEmpty())
+			return studentList.get(0);
+		else
+			return null;
+	}
+	
+	public List<Login> getAllUsers(String notUser){
+		Session sessionFactory = HibernateUtil.getSessionFactory().openSession();
+		Criteria criteria = sessionFactory.createCriteria(Login.class);
+		criteria.add(Restrictions.ne("loginId", notUser));
+		List<Login> loginList = criteria.list();
+		if (!loginList.isEmpty())
+			return loginList;
+		else
+			return null;
+	}
 }

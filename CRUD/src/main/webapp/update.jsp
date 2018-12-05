@@ -48,7 +48,9 @@ input {
 					<ul class="nav-menu">
 						<li><a href="home.jsp">Home</a></li>
 						<li><a href="insert.jsp">Insert Student Info</a></li>
-						<li><a href="search.jsp">Search Student Info</a></li>
+						<li><a href="searchhome.jsp">Search Student Info</a></li>
+						<li><a href="messages.jsp">Messages</a></li>
+						<li><a href="index.jsp">Logout</a></li>
 					</ul>
 				</nav>
 				<!-- #nav-menu-container -->
